@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รอรับความรักแป๊บน้าา...</title>
+    <style>
+        body { font-family: 'Tahoma', sans-serif; background-color: #ffeef0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
+        .container { text-align: center; width: 80%; max-width: 400px; }
+        h2 { color: #ff4d6d; margin-bottom: 20px; }
+        
+        /* แถบ Loading */
+        .progress-container { width: 100%; background-color: #ddd; border-radius: 20px; overflow: hidden; height: 30px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #ff4d6d, #ff8fa3); transition: width 0.2s; }
+        
+        #status-text { margin-top: 15px; color: #555; font-weight: bold; }
+        #error-msg { color: red; display: none; margin-top: 10px; font-size: 14px; }
+        
+        /* ปุ่มล้อเล่นที่ซ่อนไว้ */
+        #prank-btn { margin-top: 30px; padding: 10px 20px; background-color: #ff4d6d; color: white; border: none; border-radius: 20px; cursor: pointer; display: none; opacity: 0.6; font-size: 12px; }
+        #prank-btn:hover { opacity: 1; }
+
+        /* หน้าเฉลย */
+        #final-page { display: none; text-align: center; animation: fadeIn 2s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-ui">
+        <h2 id="title">กำลังดาวน์โหลด "ความรักจากเค้า"...</h2>
+        <div class="progress-container">
+            <div class="progress-bar" id="myBar"></div>
+        </div>
+        <div id="status-text">0%</div>
+        <div id="error-msg">⚠️ Error: พื้นที่ในใจเต็ม เพราะใส่ความรักไว้เยอะเกินไป!</div>
+        <button id="prank-btn" onclick="revealTruth()">กดตรงนี้ถ้าจะด่าเค้า</button>
+    </div>
+
+    <div id="final-page">
+        <h1 style="color: #ff4d6d;">ล้อเล่นน้าาา! ❤️</h1>
+        <p>โหลดไม่เสร็จหรอก เพราะรักเธอเพิ่มขึ้นทุกวินาทีเลย</p>
+        <div style="font-size: 50px;">😘</div>
+        <p><b>เลิฟยูววววววววว</b></p>
+    </div>
+
+    <script>
+        let width = 0;
+        let bar = document.getElementById("myBar");
+        let statusText = document.getElementById("status-text");
+        let errorMsg = document.getElementById("error-msg");
+        let prankBtn = document.getElementById("prank-btn");
+        let title = document.getElementById("title");
+
+        let id = setInterval(frame, 100); // ความเร็วในการโหลด
+
+        function frame() {
+            if (width >= 99) {
+                clearInterval(id);
+                // พอถึง 99% ให้ค้างไว้ 2 วินาทีแล้วขึ้น Error
+                setTimeout(() => {
+                    statusText.innerText = "99.99%";
+                    errorMsg.style.display = "block";
+                    prankBtn.style.display = "inline-block";
+                    title.innerText = "อุ๊ย... โหลดไม่ผ่าน";
+                }, 1000);
+            } else {
+                // สุ่มให้มันโหลดช้าบ้างเร็วบ้างแบบกวนๆ
+                let speed = Math.random() * 2;
+                width += speed;
+                if (width > 99) width = 99;
+                bar.style.width = width + "%";
+                statusText.innerText = Math.floor(width) + "%";
+            }
+        }
+
+        function revealTruth() {
+            document.getElementById("main-ui").style.display = "none";
+            document.getElementById("final-page").style.display = "block";
+            document.body.style.backgroundColor = "#fff";
+        }
+    </script>
+</body>
+</html>
